@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:cracked_stone_bricks"
+  },
+  "result": "minecraft:stone_bricks"
+}

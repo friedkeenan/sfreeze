@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:orange_glazed_terracotta"
+  },
+  "result": "minecraft:orange_terracotta"
+}

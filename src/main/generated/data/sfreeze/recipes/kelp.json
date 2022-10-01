@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:dried_kelp"
+  },
+  "result": "minecraft:kelp"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:lime_dye"
+  },
+  "result": "minecraft:sea_pickle"
+}

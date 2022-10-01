@@ -1,0 +1,9 @@
+{
+    "entity.item.sfreeze": {
+        "sounds": [
+            "sfreeze:item_sfreeze"
+        ],
+
+        "subtitle": "subtitles.entity.item.sfreeze"
+    }
+}

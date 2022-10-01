@@ -1,0 +1,42 @@
+{
+    "schemaVersion": 1,
+    "id": "sfreeze",
+    "version": "${version}",
+
+    "name": "Sfreeze",
+    "description": "Unsmelt items by sfreezing them with powder snow!",
+    "authors": [
+        "friedkeenan"
+    ],
+
+    "contact": {
+        "homepage": "https://github.com/friedkeenan/sfreeze",
+        "sources": "https://github.com/friedkeenan/sfreeze",
+        "issues": "https://github.com/friedkeenan/sfreeze/issues"
+    },
+
+    "license": "ISC",
+    "icon": "assets/sfreeze/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "io.github.friedkeenan.sfreeze.SfreezeMod"
+        ],
+
+        "fabric-datagen": [
+            "io.github.friedkeenan.sfreeze.data.SfreezeDataGenerator"
+        ]
+    },
+
+    "mixins": [
+        "sfreeze.mixins.json"
+    ],
+
+    "depends": {
+        "fabricloader": ">=0.14.9",
+        "fabric-api": "*",
+        "minecraft": "~1.19",
+        "java": ">=17"
+    }
+}

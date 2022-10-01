@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:cooked_salmon"
+  },
+  "result": "minecraft:salmon"
+}

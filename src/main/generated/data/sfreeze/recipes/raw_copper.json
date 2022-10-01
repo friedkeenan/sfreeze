@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": "minecraft:raw_copper"
+}

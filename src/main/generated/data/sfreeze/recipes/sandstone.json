@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:smooth_sandstone"
+  },
+  "result": "minecraft:sandstone"
+}

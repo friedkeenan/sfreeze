@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:green_dye"
+  },
+  "result": "minecraft:cactus"
+}

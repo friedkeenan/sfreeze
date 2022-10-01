@@ -1,0 +1,25 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "io.github.friedkeenan.sfreeze.mixin",
+    "compatibilityLevel": "JAVA_17",
+
+    "mixins": [
+        "AddSfreezeRecipeCache",
+        "HoldSfreezingResult",
+        "BuildSfreezingCache",
+        "TrackSfreezeSource",
+        "MakeItemsFreeze",
+        "TrackSnowGolemEmptyCauldron",
+        "TrackSnowGolemPowderSnowCauldron",
+        "AddSnowSheddingToSnowGolem"
+    ],
+
+    "client": [
+        "RemoveSfreezeRecipeWarning"
+    ],
+
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

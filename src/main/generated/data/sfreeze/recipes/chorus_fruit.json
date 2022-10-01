@@ -1,0 +1,7 @@
+{
+  "type": "sfreeze:sfreezing",
+  "ingredient": {
+    "item": "minecraft:popped_chorus_fruit"
+  },
+  "result": "minecraft:chorus_fruit"
+}
