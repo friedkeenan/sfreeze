@@ -8,7 +8,7 @@ Unsmelt items by sfreezing them with powder snow!
 
 When an item is within a block of powder snow for long enough, it will sfreeze the stack of items into an uncooked form. Depending on the amount of items in the stack, the powder snow has a chance of disappearing after sfreezing the stack. A stack of 64 items will always cause the powder snow to disappear.
 
-Additionally, powder snow haas been made more easily obtainable. If a snow golem is damaged within a cauldron, it has a chance of shedding some snow into the cauldron, increasing the level of powder snow.
+Additionally, powder snow has been made more easily obtainable. If a snow golem is damaged within a cauldron, it has a chance of shedding some snow into the cauldron, increasing the level of powder snow.
 
 ## What is sfreezing?
 
