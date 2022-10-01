@@ -12,7 +12,7 @@ Additionally, powder snow haas been made more easily obtainable. If a snow golem
 
 ## What is sfreezing?
 
-To sfreeze something is to unsmelt it, its name is derived by taking "smelt", and replacing "melt" (to which "smelt" is etymologically related) with "freeze". Thence we get "sfreeze".
+To sfreeze something is to unsmelt it; its name is derived by taking "smelt", and replacing the contained "melt" (to which "smelt" is etymologically related) with "freeze". Thence we get "sfreeze".
 
 ## How do I add my own sfreezing recipes?
 
