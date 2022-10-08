@@ -1,29 +1,26 @@
 package io.github.friedkeenan.sfreeze.mixin;
 
-import java.util.Map;
 import java.util.Optional;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.google.gson.JsonElement;
-
 import io.github.friedkeenan.sfreeze.SfreezeMod;
 import io.github.friedkeenan.sfreeze.SfreezingResultHolder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.world.item.crafting.RecipeManager;
 
-@Mixin(RecipeManager.class)
+@Mixin(ReloadableServerResources.class)
 public class BuildSfreezingCache {
-    private RecipeManager asRecipeManager() {
-        return (RecipeManager) (Object) this;
-    }
+    @Shadow
+    @Final
+    private RecipeManager recipes;
 
     private void clearCache() {
         Registry.ITEM.forEach(item -> ((SfreezingResultHolder) item).setResult(Optional.empty()));
@@ -32,7 +29,7 @@ public class BuildSfreezingCache {
     private void refreshCache() {
         this.clearCache();
 
-        for (final var recipe : this.asRecipeManager().getAllRecipesFor(SfreezeMod.SFREEZING)) {
+        for (final var recipe : this.recipes.getAllRecipesFor(SfreezeMod.SFREEZING)) {
             for (final var ingredient : recipe.ingredient.getItems()) {
                 final var result_holder = (SfreezingResultHolder) ingredient.getItem();
 
@@ -41,13 +38,12 @@ public class BuildSfreezingCache {
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "apply")
-    private void refreshCacheOnApply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller, CallbackInfo info) {
-        this.refreshCache();
-    }
-
-    @Inject(at = @At("TAIL"), method = "replaceRecipes")
-    private void refreshCacheOnReplaceRecipes(Iterable<Recipe<?>> recipes, CallbackInfo info) {
+    /*
+        We inject in the tag update function because that is always called on reload and is easy.
+        The game also rebuilds its cache of whether block states have a dynamic shape or not here.
+    */
+    @Inject(at = @At("TAIL"), method = "updateRegistryTags")
+    private void refreshCacheOnDataLoad(RegistryAccess access, CallbackInfo info) {
         this.refreshCache();
     }
 }
