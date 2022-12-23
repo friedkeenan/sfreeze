@@ -12,11 +12,8 @@
         "MakeItemsFreeze",
         "TrackSnowGolemEmptyCauldron",
         "TrackSnowGolemPowderSnowCauldron",
-        "AddSnowSheddingToSnowGolem"
-    ],
-
-    "client": [
-        "RemoveSfreezeRecipeWarning"
+        "AddSnowSheddingToSnowGolem",
+        "StopClientboundSfreezingRecipe"
     ],
 
     "injectors": {

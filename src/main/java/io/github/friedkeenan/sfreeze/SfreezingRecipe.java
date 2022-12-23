@@ -95,16 +95,12 @@ public class SfreezingRecipe implements Recipe<Container> {
 
         @Override
         public SfreezingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-            final var ingredient = Ingredient.fromNetwork(buf);
-            final var result     = buf.readById(BuiltInRegistries.ITEM);
-
-            return new SfreezingRecipe(id, ingredient, result);
+            throw new AssertionError("Sfreezing recipes should never be sent to the client");
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, SfreezingRecipe recipe) {
-            recipe.ingredient.toNetwork(buf);
-            buf.writeId(BuiltInRegistries.ITEM, recipe.result);
+            throw new AssertionError("Sfreezing recipes should never be sent to the client");
         }
 
     }

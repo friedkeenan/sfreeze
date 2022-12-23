@@ -1,8 +1,10 @@
 package io.github.friedkeenan.sfreeze.mixin;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +26,9 @@ public abstract class AddSfreezeRecipeCache implements SfreezeRecipeCacher {
     @Nullable
     private Map<ResourceLocation, SfreezingRecipe> old_sfreezing_recipes = null;
     private Map<Item, Optional<Item>> sfreezing_cache = new HashMap<>();
+
+    @Shadow
+    private Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
 
     @Shadow
     protected abstract <C extends Container, T extends Recipe<C>> Map<ResourceLocation, T> byType(RecipeType<T> type);
@@ -54,5 +59,13 @@ public abstract class AddSfreezeRecipeCache implements SfreezeRecipeCacher {
         this.sfreezing_cache.put(item, result);
 
         return result;
+    }
+
+    @Override
+    public Collection<Recipe<?>> getNonSfreezingRecipes() {
+        return this.recipes.entrySet().stream()
+            .filter(entry -> entry.getKey() != SfreezeMod.SFREEZING)
+            .flatMap(entry -> entry.getValue().values().stream())
+            .collect(Collectors.toSet());
     }
 }
