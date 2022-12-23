@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.friedkeenan.sfreeze.SfreezeMod;
 import io.github.friedkeenan.sfreeze.SfreezingResultHolder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -23,7 +23,7 @@ public class BuildSfreezingCache {
     private RecipeManager recipes;
 
     private void clearCache() {
-        Registry.ITEM.forEach(item -> ((SfreezingResultHolder) item).setResult(Optional.empty()));
+        BuiltInRegistries.ITEM.forEach(item -> ((SfreezingResultHolder) item).setResult(Optional.empty()));
     }
 
     private void refreshCache() {

@@ -3,7 +3,7 @@ package io.github.friedkeenan.sfreeze;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -86,7 +86,7 @@ public class SfreezingRecipe implements Recipe<Container> {
             );
 
             final var result_location = GsonHelper.getAsString(json, "result");
-            final var result = Registry.ITEM.getOptional(new ResourceLocation(result_location)).orElseThrow(
+            final var result = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(result_location)).orElseThrow(
                 () -> new IllegalStateException("Item: " + result_location + " does not exist")
             );
 
@@ -96,7 +96,7 @@ public class SfreezingRecipe implements Recipe<Container> {
         @Override
         public SfreezingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             final var ingredient = Ingredient.fromNetwork(buf);
-            final var result     = buf.readById(Registry.ITEM);
+            final var result     = buf.readById(BuiltInRegistries.ITEM);
 
             return new SfreezingRecipe(id, ingredient, result);
         }
@@ -104,7 +104,7 @@ public class SfreezingRecipe implements Recipe<Container> {
         @Override
         public void toNetwork(FriendlyByteBuf buf, SfreezingRecipe recipe) {
             recipe.ingredient.toNetwork(buf);
-            buf.writeId(Registry.ITEM, recipe.result);
+            buf.writeId(BuiltInRegistries.ITEM, recipe.result);
         }
 
     }

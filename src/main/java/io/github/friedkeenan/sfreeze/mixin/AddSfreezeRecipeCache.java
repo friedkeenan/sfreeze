@@ -29,7 +29,6 @@ public abstract class AddSfreezeRecipeCache implements SfreezeRecipeCacher {
     protected abstract <C extends Container, T extends Recipe<C>> Map<ResourceLocation, T> byType(RecipeType<T> type);
 
     @Override
-    @Nullable
     public Optional<Item> findResult(Item item) {
         final var sfreezing_recipes = this.byType(SfreezeMod.SFREEZING);
         if (sfreezing_recipes != this.old_sfreezing_recipes) {

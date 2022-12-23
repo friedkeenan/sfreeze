@@ -4,18 +4,19 @@ import java.util.function.Consumer;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.Items;
 
 public class SfreezeDataGenerator implements DataGeneratorEntrypoint {
     public static class SfreezeRecipeGenerator extends FabricRecipeProvider {
-        public SfreezeRecipeGenerator(FabricDataGenerator generator) {
-            super(generator);
+        public SfreezeRecipeGenerator(FabricDataOutput output) {
+            super(output);
         }
 
         @Override
-        public void generateRecipes(Consumer<FinishedRecipe> exporter) {
+        public void buildRecipes(Consumer<FinishedRecipe> exporter) {
             SfreezingRecipeBuilder.save(exporter).sfreezing(Items.BAKED_POTATO,                       Items.POTATO);
             SfreezingRecipeBuilder.save(exporter).sfreezing(Items.BLACK_GLAZED_TERRACOTTA,            Items.BLACK_TERRACOTTA);
             SfreezingRecipeBuilder.save(exporter).sfreezing(Items.BLUE_GLAZED_TERRACOTTA,             Items.BLUE_TERRACOTTA);
@@ -71,6 +72,8 @@ public class SfreezeDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
-        generator.addProvider(SfreezeRecipeGenerator::new);
+        final var pack = generator.createPack();
+
+        pack.addProvider(SfreezeRecipeGenerator::new);
     }
 }

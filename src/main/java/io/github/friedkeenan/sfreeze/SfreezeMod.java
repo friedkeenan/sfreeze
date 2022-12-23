@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +28,7 @@ public class SfreezeMod implements ModInitializer {
 
     public static final SfreezingRecipe.Serializer SFREEZING_SERIALIZER = new SfreezingRecipe.Serializer();
 
-    public static final SoundEvent SFREEZE_SOUND = new SoundEvent(new ResourceLocation("sfreeze:entity.item.sfreeze"));
+    public static final SoundEvent SFREEZE_SOUND = SoundEvent.createVariableRangeEvent(new ResourceLocation("sfreeze:entity.item.sfreeze"));
 
     public static boolean IsEntityInsideCauldron(Entity entity, BlockPos pos) {
         return entity.getY() < ((double) pos.getY()) + 1.0 && entity.getBoundingBox().maxY > ((double) pos.getY()) + 0.25;
@@ -55,10 +56,10 @@ public class SfreezeMod implements ModInitializer {
     }
 
     public void onInitialize() {
-        Registry.register(Registry.RECIPE_TYPE, "sfreeze:sfreezing", SFREEZING);
-        Registry.register(Registry.RECIPE_SERIALIZER, "sfreeze:sfreezing", SFREEZING_SERIALIZER);
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, "sfreeze:sfreezing", SFREEZING);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, "sfreeze:sfreezing", SFREEZING_SERIALIZER);
 
-        Registry.register(Registry.SOUND_EVENT, SFREEZE_SOUND.getLocation(), SFREEZE_SOUND);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, SFREEZE_SOUND.getLocation(), SFREEZE_SOUND);
 
         LOGGER.info("sfreeze initialized!");
     }

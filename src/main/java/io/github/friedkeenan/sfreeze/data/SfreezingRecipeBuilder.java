@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import com.google.gson.JsonObject;
 
 import io.github.friedkeenan.sfreeze.SfreezeMod;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +29,7 @@ public class SfreezingRecipeBuilder {
         @Override
         public void serializeRecipeData(JsonObject json) {
             json.add("ingredient", this.ingredient.toJson());
-            json.addProperty("result", Registry.ITEM.getKey(this.result).toString());
+            json.addProperty("result", BuiltInRegistries.ITEM.getKey(this.result).toString());
         }
 
         @Override
