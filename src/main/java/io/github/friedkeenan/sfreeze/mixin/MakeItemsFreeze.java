@@ -33,10 +33,8 @@ public abstract class MakeItemsFreeze extends Entity implements Sfreezable {
     }
 
     @Override
-    protected void checkInsideBlocks() {
+    public void markCheckedInsideBlocks() {
         this.checked_inside_blocks = true;
-
-        super.checkInsideBlocks();
     }
 
     @Shadow
@@ -89,7 +87,7 @@ public abstract class MakeItemsFreeze extends Entity implements Sfreezable {
         }
 
         if (frozen_time >= this.getTicksRequiredToFreeze()) {
-            level.playSound(null, this.getX(), this.getY(), this.getZ(), SfreezeMod.SFREEZE_SOUND, SoundSource.AMBIENT, 1.0f, 1.0f);
+            level.playSound(null, this.getX(), this.getY(), this.getZ(), SfreezeMod.SFREEZE_SOUND, SoundSource.NEUTRAL, 1.0f, 1.0f);
 
             var count = this.getItem().getCount();
 

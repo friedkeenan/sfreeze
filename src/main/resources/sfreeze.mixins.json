@@ -10,8 +10,10 @@
         "BuildSfreezingCache",
         "TrackSfreezeSource",
         "MakeItemsFreeze",
-        "TrackSnowGolemEmptyCauldron",
-        "TrackSnowGolemPowderSnowCauldron",
+        "TrackSnowShedderEmptyCauldron",
+        "TrackSnowShedderPowderSnowCauldron",
+        "HandleCheckInsideBlocks",
+        "ShedSnowIntoCauldron",
         "AddSnowSheddingToSnowGolem",
         "StopClientboundSfreezingRecipe"
     ],
