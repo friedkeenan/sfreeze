@@ -1,7 +1,10 @@
 package io.github.friedkeenan.sfreeze;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 
 public interface SnowShedder {
-    public void setCauldronPos(BlockPos pos);
+    public @Nullable BlockPos getCauldronPos();
+    public void setCauldronPos(@Nullable BlockPos pos);
 }

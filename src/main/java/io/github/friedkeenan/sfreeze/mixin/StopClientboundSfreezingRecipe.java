@@ -4,7 +4,9 @@ import java.util.Collection;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import io.github.friedkeenan.sfreeze.SfreezeRecipeCacher;
 import net.minecraft.server.players.PlayerList;
@@ -17,7 +19,7 @@ public class StopClientboundSfreezingRecipe {
         return ((SfreezeRecipeCacher) manager).getNonSfreezingRecipes();
     }
 
-    @Redirect(
+    @WrapOperation(
         at = @At(
             value  = "INVOKE",
             target = "Lnet/minecraft/world/item/crafting/RecipeManager;getRecipes()Ljava/util/Collection;"
@@ -25,11 +27,11 @@ public class StopClientboundSfreezingRecipe {
 
         method = "placeNewPlayer"
     )
-    private Collection<Recipe<?>> neglectSendingSfreezingRecipesToNewPlayer(RecipeManager manager) {
+    private Collection<Recipe<?>> neglectSendingSfreezingRecipesToNewPlayer(RecipeManager manager, Operation<Collection<Recipe<?>>> original) {
         return NonSfreezingRecipes(manager);
     }
 
-    @Redirect(
+    @WrapOperation(
         at = @At(
             value  = "INVOKE",
             target = "Lnet/minecraft/world/item/crafting/RecipeManager;getRecipes()Ljava/util/Collection;"
@@ -37,7 +39,7 @@ public class StopClientboundSfreezingRecipe {
 
         method = "reloadResources"
     )
-    private Collection<Recipe<?>> neglectSendingSfreezingRecipesOnReload(RecipeManager manager) {
+    private Collection<Recipe<?>> neglectSendingSfreezingRecipesOnReload(RecipeManager manager, Operation<Collection<Recipe<?>>> original) {
         return NonSfreezingRecipes(manager);
     }
 }
