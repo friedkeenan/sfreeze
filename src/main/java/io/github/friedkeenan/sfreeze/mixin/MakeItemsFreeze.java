@@ -55,7 +55,7 @@ public abstract class MakeItemsFreeze extends Entity implements Sfreezable {
             return;
         }
 
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide()) {
             return;
         }
 
@@ -87,19 +87,19 @@ public abstract class MakeItemsFreeze extends Entity implements Sfreezable {
         }
 
         if (frozen_time >= this.getTicksRequiredToFreeze()) {
-            level.playSound(null, this.getX(), this.getY(), this.getZ(), SfreezeMod.SFREEZE_SOUND, SoundSource.NEUTRAL, 1.0f, 1.0f);
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SfreezeMod.SFREEZE_SOUND, SoundSource.NEUTRAL, 1.0f, 1.0f);
 
             var count = this.getItem().getCount();
 
             if (this.random.nextInt(AVERAGE_ITEMS_BEFORE_POWDER_SNOW_POOFS) < count) {
-                this.level.destroyBlock(this.sfreeze_source, false);
-                this.level.playSound(null, this.sfreeze_source, SoundEvents.POWDER_SNOW_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
+                this.level().destroyBlock(this.sfreeze_source, false);
+                this.level().playSound(null, this.sfreeze_source, SoundEvents.POWDER_SNOW_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
             }
 
             while (count > 0) {
                 final var result_count = Math.min(sfreeze_result.getMaxStackSize(), count);
-                final var result_entity = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(sfreeze_result, result_count));
-                this.level.addFreshEntity(result_entity);
+                final var result_entity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), new ItemStack(sfreeze_result, result_count));
+                this.level().addFreshEntity(result_entity);
 
                 count -= result_count;
             }

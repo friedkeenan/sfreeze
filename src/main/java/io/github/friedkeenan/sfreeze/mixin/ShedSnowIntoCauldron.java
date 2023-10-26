@@ -33,7 +33,7 @@ abstract public class ShedSnowIntoCauldron extends Entity {
             return;
         }
 
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide()) {
             return;
         }
 
@@ -44,8 +44,8 @@ abstract public class ShedSnowIntoCauldron extends Entity {
             return;
         }
 
-        if (this.random.nextInt(3) == 0 && this.mayInteract(this.level, cauldron_pos)) {
-            final var inside_block = this.level.getBlockState(cauldron_pos);
+        if (this.random.nextInt(3) == 0 && this.mayInteract(this.level(), cauldron_pos)) {
+            final var inside_block = this.level().getBlockState(cauldron_pos);
 
             final BlockState new_state;
             if (inside_block.is(Blocks.CAULDRON)) {
@@ -54,8 +54,8 @@ abstract public class ShedSnowIntoCauldron extends Entity {
                 new_state = inside_block.cycle(LayeredCauldronBlock.LEVEL);
             }
 
-            this.level.setBlockAndUpdate(cauldron_pos, new_state);
-            this.level.gameEvent(GameEvent.BLOCK_CHANGE, cauldron_pos, GameEvent.Context.of(new_state));
+            this.level().setBlockAndUpdate(cauldron_pos, new_state);
+            this.level().gameEvent(GameEvent.BLOCK_CHANGE, cauldron_pos, GameEvent.Context.of(new_state));
         }
     }
 }

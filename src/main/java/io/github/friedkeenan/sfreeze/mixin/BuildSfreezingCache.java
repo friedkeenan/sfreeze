@@ -30,10 +30,10 @@ public class BuildSfreezingCache {
         this.clearCache();
 
         for (final var recipe : this.recipes.getAllRecipesFor(SfreezeMod.SFREEZING)) {
-            for (final var ingredient : recipe.ingredient.getItems()) {
+            for (final var ingredient : recipe.value().ingredient.getItems()) {
                 final var result_holder = (SfreezingResultHolder) ingredient.getItem();
 
-                result_holder.setResult(Optional.of(recipe.result));
+                result_holder.setResult(Optional.of(recipe.value().result));
             }
         }
     }

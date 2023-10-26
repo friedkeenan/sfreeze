@@ -1,12 +1,12 @@
 package io.github.friedkeenan.sfreeze;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,12 +17,10 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 public class SfreezingRecipe implements Recipe<Container> {
-    public final ResourceLocation id;
     public final Ingredient ingredient;
     public final Item result;
 
-    public SfreezingRecipe(ResourceLocation id, Ingredient ingredient, Item result) {
-        this.id         = id;
+    public SfreezingRecipe(Ingredient ingredient, Item result) {
         this.ingredient = ingredient;
         this.result     = result;
     }
@@ -35,7 +33,7 @@ public class SfreezingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container var1) {
+    public ItemStack assemble(Container container, RegistryAccess registries) {
         /* Stub implementation. */
 
         return ItemStack.EMPTY;
@@ -47,7 +45,7 @@ public class SfreezingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registries) {
         return new ItemStack(this.result);
     }
 
@@ -57,11 +55,6 @@ public class SfreezingRecipe implements Recipe<Container> {
         ingredients.add(this.ingredient);
 
         return ingredients;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override
@@ -75,26 +68,25 @@ public class SfreezingRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<SfreezingRecipe> {
+        private static final Codec<SfreezingRecipe> CODEC = RecordCodecBuilder.create(
+            instance -> instance.group(
+                Ingredient.CODEC_NONEMPTY
+                    .fieldOf("ingredient")
+                    .forGetter(recipe -> recipe.ingredient),
+
+                BuiltInRegistries.ITEM.byNameCodec()
+                    .fieldOf("result")
+                    .forGetter(recipe -> recipe.result)
+            ).apply(instance, SfreezingRecipe::new)
+        );
 
         @Override
-        public SfreezingRecipe fromJson(ResourceLocation id, JsonObject json) {
-            final var ingredient = Ingredient.fromJson(
-                GsonHelper.isArrayNode(json, "ingredient") ?
-
-                GsonHelper.getAsJsonArray(json,  "ingredient") :
-                GsonHelper.getAsJsonObject(json, "ingredient")
-            );
-
-            final var result_location = GsonHelper.getAsString(json, "result");
-            final var result = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(result_location)).orElseThrow(
-                () -> new IllegalStateException("Item: " + result_location + " does not exist")
-            );
-
-            return new SfreezingRecipe(id, ingredient, result);
+        public Codec<SfreezingRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public SfreezingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        public SfreezingRecipe fromNetwork(FriendlyByteBuf buf) {
             throw new AssertionError("Sfreezing recipes should never be sent to the client");
         }
 
